@@ -1,4 +1,0 @@
-### searchFinance
-GET http://localhost:8080/finance/dividend/3M Company
-Accept: application/json
-
