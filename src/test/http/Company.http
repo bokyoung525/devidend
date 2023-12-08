@@ -1,0 +1,18 @@
+### searchCompany
+GET http://localhost:8080/company/11734365
+Accept: application/json
+
+### addCompany
+POST http://localhost:8080/company
+Content-Type: application/json
+
+{
+  "ticker": "MMM"
+}
+
+### autocomplete
+GET http://localhost:8080/company/autocomplete?keyword=I
+Accept: application/json
+
+
+
