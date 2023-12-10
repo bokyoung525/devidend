@@ -1,5 +1,6 @@
 package com.zerobase.devidend.scraper;
 
+import com.zerobase.devidend.exception.impl.NotExistTicker;
 import com.zerobase.devidend.model.Company;
 import com.zerobase.devidend.model.Dividend;
 import com.zerobase.devidend.model.ScrapedResult;
@@ -59,12 +60,11 @@ public class YahooFinanceScraper implements Scraper{
                 dividends.add(new Dividend(LocalDateTime.of(year, month, day, 0, 0), dividend));
             }
             scrapeResult.setDividends(dividends);
+            return scrapeResult;
 
         } catch (IOException e) {
-            //TODO
-            e.printStackTrace();
+            throw new NotExistTicker();
         }
-        return scrapeResult;
     }
 
     @Override
@@ -73,13 +73,17 @@ public class YahooFinanceScraper implements Scraper{
 
         try {
             Document document = Jsoup.connect(url).get();
-            Element titleEle = document.getElementsByTag("h1").get(0);
-            String title = titleEle.text().split(" - ")[1].trim();
-
-            return new Company(ticker, title);
+            Elements titleElements = document.getElementsByTag("h1");
+            if (!titleElements.isEmpty()) {
+                Element titleEle = titleElements.get(0);
+                String title = titleEle.text().split(" - ")[1].trim();
+                return new Company(ticker, title);
+            } else {
+                // Handle the case where "h1" tag is not found
+                throw new NotExistTicker();
+            }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new NotExistTicker();
         }
-        return null;
     }
 }

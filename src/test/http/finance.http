@@ -1,5 +1,7 @@
 ### searchFinance
-GET http://localhost:8080/finance/dividend/3M Company
+GET http://localhost:8080/finance/dividend/3M
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZSIsInJvbGVzIjpbIlJPTEVfUkVBRCIsIlJPTEVfV1JJVEUiXSwiaWF0IjoxNzAyMDU4ODU0LCJleHAiOjE3MDIwNjI0NTR9.SiP6HOJRzsgqlaZs30nPnPyvNdyDSC-I8aimZQePcVFyaOYGEdpYLosf-4A-C5LjrNCyQ9Zn20wKOZo_3EOgHA
+//Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJncmFjZSIsInJvbGVzIjpbIlJPTEVfUkVBRCIsIlJPTEVfV1JJVEUiXSwiaWF0IjoxNzAyMTg2MDE1LCJleHAiOjE3MDIxODk2MTV9.AD4xpY4ObGtUYDqzUCof8_39h15tCjFmhOsa99Gh7GIwo6O_V9_wo3rCSob6vsTYuwHqoxe76PAxx_vl8chW0A
+
+
 

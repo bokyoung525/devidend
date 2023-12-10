@@ -1,5 +1,8 @@
 package com.zerobase.devidend.service;
 
+import com.zerobase.devidend.exception.impl.AlreadyExistTickerException;
+import com.zerobase.devidend.exception.impl.NoCompanyException;
+import com.zerobase.devidend.exception.impl.NotExistTicker;
 import com.zerobase.devidend.model.Company;
 import com.zerobase.devidend.model.ScrapedResult;
 import com.zerobase.devidend.persist.CompanyRepository;
@@ -29,7 +32,7 @@ public class CompanyService {
     public Company save(String ticker) {
         boolean exists = this.companyRepository.existsByTicker(ticker);
         if (exists) {
-            throw new RuntimeException("already exists ticker -> " + ticker);
+            throw new AlreadyExistTickerException();
         }
         return this.storeCompanyAndDividend(ticker);
     }
@@ -41,7 +44,7 @@ public class CompanyService {
     private Company storeCompanyAndDividend(String ticker) {
         Company company = this.yahooFinanceScrapper.scrapCompanyByTicker(ticker);
         if (ObjectUtils.isEmpty(company)) {
-            throw new RuntimeException("failed to scrap ticker -> " + ticker);
+            throw new NotExistTicker();
         }
 
         ScrapedResult scrapedResult = this.yahooFinanceScrapper.scrap(company);
@@ -72,7 +75,7 @@ public class CompanyService {
 
     public String deleteCompany(String ticker) {
         var company = this.companyRepository.findByTicker(ticker)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 회사입니다."));
+                .orElseThrow(() -> new NoCompanyException());
 
         this.dividendRepository.deleteAllByCompanyId(company.getId());
         this.companyRepository.delete(company);
